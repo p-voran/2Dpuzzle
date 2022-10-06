@@ -15,6 +15,8 @@ var goal_configration = [1,2,3,0,4,0,0,0]
 var min_moves = 6
 
 
+#	adjust_game_state_to_config(start_depth_10,0) 
+
 func calculate_possible_slides(configuration, label):
 	var res = []
 	if label != 0:
@@ -85,7 +87,6 @@ func create_new_game():
 			tile.connect("tile_wants_to_move", self, "tile_wants_to_move_handler")
 			tile.connect("tile_wants_not_to_move", self, "tile_wants_not_to_move_handler")
 			
-	adjust_game_state_to_config(start_depth_10,0) 
 
 func tile_wants_to_move_handler(tilelabel):
 	var possible_slides = calculate_possible_slides(current_configuration, tilelabel)
@@ -157,6 +158,8 @@ func _on_HUD_start_game():
 
 func _on_HUD_reset_game():
 	adjust_game_state_to_config(starting_configuration, 0)
+	progress_array = [[]+starting_configuration]
+	$HUD/UndoButton.hide()
 
 func _on_HUD_undo_move():
 	adjust_game_state_to_config(progress_array[-2], $HUD.movecount - 1)
